@@ -529,7 +529,7 @@ Now, all the nodes were running a Calico pod and the CoreDNS pods were finally h
 
 But WordPress would stiff refuse to connect to the database. Upon further close inspection, it turns out our Service for exposing the database was configured with the wrong Selector.
 
-#### 3.1 Docker & Environment Variables for WordPress & MySQL
+### 3.1 Docker & Environment Variables for WordPress & MySQL
 
 Finally after making sure all of the configuration was in place, WordPress still refused to connect to the Database.
 
@@ -539,7 +539,7 @@ While I have not found out why this happens, for now, I manually edited the `wp-
 
 And, then it turned out that our user still did not have enough privileges to connect to the database as the `wordpress@x.x.x.x.` user, despite using a password. To overcome this, we would need to access the MySQL pod and manually adding the user.
 
-#### 3.2 MySQL User
+### 3.2 MySQL User
 
 First, we will exec into the MySQL Pod
 
