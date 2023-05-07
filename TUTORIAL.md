@@ -1,11 +1,3 @@
----
-slug: deploy-wordpress-mysql-kubernetes-dashboard-nfs
-title: Deploy WordPress & MySQL with Kubernetes Dashboard & NFS
-date: 2023-05-02T13:00
-authors: nyukeit
-tags: [Kubernetes, WordPress, MySQL, NFS]
----
-
 ## 1. Introduction
 
 In this project, we will deploy a WordPress application which uses a MySQL database using Network File System on a 3 node Kubernetes cluster, using the Kubernetes Dashboard. 
