@@ -1,4 +1,4 @@
 resources:
-  - kustomizations/mysql-pass.yaml
-  - kustomizations/mysql.yaml
-  - kustomizations/wordpress.yaml
+  - manifests/mysql-pass.yaml
+  - manifests/mysql.yaml
+  - manifests/wordpress.yaml

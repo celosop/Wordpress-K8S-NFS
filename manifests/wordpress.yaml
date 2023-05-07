@@ -3,7 +3,6 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: cep-project1
   labels:
     app: wordpress
   name: wordpress
@@ -39,7 +38,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: wp-app-claim
-  namespace: cep-project1
 spec:
   storageClassName: manual
   volumeName: wp-app-pv
@@ -55,7 +53,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
-  namespace: cep-project1
   labels:
     app: wordpress
 spec:

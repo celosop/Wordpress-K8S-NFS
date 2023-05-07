@@ -2,6 +2,5 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: mysql-pass
-  namespace: cep-project1
 stringData:
   password: "pilgrim12345"
