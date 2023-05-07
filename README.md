@@ -10,7 +10,7 @@ All the data of both the applications is saved on the NFS volumes.
 
 [Kubernetes](https://kubernetes.io/docs/tasks/tools/)
 
-[Node setup as an NFS Server](NFS Storage Setup.md)
+[Node setup as an NFS Server](/NFS Storage Setup.md)
 
 ## Defaults
 
@@ -69,5 +69,5 @@ The credentials for `wp-config.php` are not copied into the final file used by W
 
 Connection to the database is not happening post deployment. A MySQL user will need to be created manually by logging into the MySQL Pod.
 
-[MySQL User Setup](MySQL User Setup.md)
+[MySQL User Setup](/MySQL User Setup.md)
 
