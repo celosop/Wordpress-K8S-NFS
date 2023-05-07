@@ -577,4 +577,4 @@ FLUSH PRIVILEGES;
 
 And finally, we will now be able to access our WordPress app, using our Node IP and NodePort provisioned port number, 32556 in this case.
 
-![WordPress Install Screen](C:\Users\Nyukeit\devops-wiki\blog\deploy-3-tier-wordpress-app-kubernetes\images\wordpress-install-screen.png)
+![WordPress Install Screen](images/wordpress-install-screen.png)
