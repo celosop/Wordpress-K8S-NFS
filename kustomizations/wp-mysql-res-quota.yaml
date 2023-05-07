@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+ name: object-counts
+ namespace: cep-project1
+spec:
+ hard:
+   pods: "3"
+   services: "3"
+   count/deployments.apps: "2"
+   count/replicasets.apps: "2"

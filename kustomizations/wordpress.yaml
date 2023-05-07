@@ -1,0 +1,97 @@
+# WordPress App Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: cep-project1
+  labels:
+    app: wordpress
+  name: wordpress
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  selector:
+    app: wordpress
+
+# PersistentVolume for WordPress
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+   name: wp-app-pv
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  nfs:
+    path: /mnt/nfs-shared/wp
+    server: 10.1.0.12
+    readOnly: false
+
+# WordPress App PersistentVolumeClaim
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: wp-app-claim
+  namespace: cep-project1
+spec:
+  storageClassName: manual
+  volumeName: wp-app-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+# WordPress App Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  namespace: cep-project1
+  labels:
+    app: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+        - image: wordpress
+          name: wordpress
+          env:
+          - name: WORDPRESS_DB_HOST
+            value: mysql-svc
+          - name: WORDPRESS_DB_USER
+            value: wordpress
+          - name: WORDPRESS_DB_NAME
+            value: wpdb
+          - name: WORDPRESS_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-pass
+                key: password
+          - name: WORDPRESS_DEBUG
+            value: "1"
+          ports:
+            - containerPort: 80
+              name: wordpress
+          volumeMounts:
+            - name: wordpress-persistent-storage
+              mountPath: /var/www/html
+      volumes:
+        - name: wordpress-persistent-storage
+          persistentVolumeClaim:
+            claimName: wp-app-claim
