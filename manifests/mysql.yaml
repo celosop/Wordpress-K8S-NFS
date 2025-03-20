@@ -4,6 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-svc-101
+  namespace: wordpress
   labels:
     app: wordpress-101
 spec:
@@ -21,6 +22,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
    name: mysql-pv-101
+   namespace: wordpress
 spec:
   storageClassName: manual
   accessModes:
@@ -28,8 +30,8 @@ spec:
   capacity:
     storage: 1Gi
   nfs:
-    path: /mnt/nfs-shared/db
-    server: 10.1.0.12
+    path: /mnt/hd1/wordpress/incubacoop.ufrpe.br/web
+    server: 172.16.69.59
     readOnly: false
 
 # MySQL PersistentVolumeClaim
@@ -38,6 +40,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mysql-claim-101
+  namespace: wordpress
 spec:
   storageClassName: manual
   volumeName: mysql-pv-101
@@ -53,6 +56,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql-101
+  namespace: wordpress
   labels:
     app: wordpress-101
 spec:
