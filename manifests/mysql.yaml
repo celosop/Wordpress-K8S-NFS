@@ -3,9 +3,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-svc
+  name: mysql-svc-101
   labels:
-    app: wordpress
+    app: wordpress-101
 spec:
   # This creates a headless service
   clusterIP: None
@@ -13,14 +13,14 @@ spec:
     - port: 3306
       targetPort: 3306
   selector:
-    app: wordpress
+    app: wordpress-101
 
 # MySQL Persistent Volume mapped to an NFS volume
 ---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-   name: mysql-pv
+   name: mysql-pv-101
 spec:
   storageClassName: manual
   accessModes:
@@ -37,10 +37,10 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: mysql-claim
+  name: mysql-claim-101
 spec:
   storageClassName: manual
-  volumeName: mysql-pv
+  volumeName: mysql-pv-101
   accessModes:
     - ReadWriteOnce
   resources:
@@ -52,37 +52,37 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: mysql-101
   labels:
-    app: wordpress
+    app: wordpress-101
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress
+      app: wordpress-101
   template:
     metadata:
       labels:
-        app: wordpress
+        app: wordpress-101
     spec:
       containers:
         - image: mysql:8
-          name: mysql
+          name: mysql-101
           env:
             - name: MYSQL_DATABASE
               value: wpdb
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                   name: mysql-pass
+                   name: mysql-pass-101
                    key: password
           ports:
             - containerPort: 3306
-              name: mysql
+              name: mysql-101
           volumeMounts:
-            - name: mysql-persistent-storage
+            - name: mysql-persistent-storage-101
               mountPath: /var/lib/mysql
       volumes:
-        - name: mysql-persistent-storage
+        - name: mysql-persistent-storage-101
           persistentVolumeClaim:
-            claimName: mysql-claim
+            claimName: mysql-claim-101
