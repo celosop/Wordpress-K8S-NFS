@@ -4,23 +4,24 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: wordpress
-  name: wordpress
+    app: wordpress-101
+  name: wordpress-101
 spec:
   type: NodePort
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
+      nodePort: 30396
   selector:
-    app: wordpress
+    app: wordpress-101
 
 # PersistentVolume for WordPress
 ---
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-   name: wp-app-pv
+   name: wp-app-pv-101
 spec:
   storageClassName: manual
   accessModes:
@@ -28,8 +29,8 @@ spec:
   capacity:
     storage: 1Gi
   nfs:
-    path: /mnt/nfs-shared/wp
-    server: 10.1.0.12
+    path: /mnt/hd1/wordpress/incubacoop.ufrpe.br/web
+    server: 172.16.69.59
     readOnly: false
 
 # WordPress App PersistentVolumeClaim
@@ -37,10 +38,10 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: wp-app-claim
+  name: wp-app-claim-101
 spec:
   storageClassName: manual
-  volumeName: wp-app-pv
+  volumeName: wp-app-pv-101
   accessModes:
     - ReadWriteOnce
   resources:
@@ -52,25 +53,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wordpress
+  name: wordpress-101
   labels:
-    app: wordpress
+    app: wordpress-101
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wordpress
+      app: wordpress-101
   template:
     metadata:
       labels:
-        app: wordpress
+        app: wordpress-101
     spec:
       containers:
         - image: wordpress
-          name: wordpress
+          name: wordpress-101
           env:
           - name: WORDPRESS_DB_HOST
-            value: mysql-svc
+            value: mysql-svc-101
           - name: WORDPRESS_DB_USER
             value: wordpress
           - name: WORDPRESS_DB_NAME
@@ -78,17 +79,17 @@ spec:
           - name: WORDPRESS_DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: mysql-pass
+                name: mysql-pass-101
                 key: password
           - name: WORDPRESS_DEBUG
             value: "1"
           ports:
             - containerPort: 80
-              name: wordpress
+              name: wordpress-101
           volumeMounts:
-            - name: wordpress-persistent-storage
+            - name: wordpress-persistent-storage-101
               mountPath: /var/www/html
       volumes:
-        - name: wordpress-persistent-storage
+        - name: wordpress-persistent-storage-101
           persistentVolumeClaim:
-            claimName: wp-app-claim
+            claimName: wp-app-claim-101
