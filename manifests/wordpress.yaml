@@ -6,6 +6,7 @@ metadata:
   labels:
     app: wordpress-101
   name: wordpress-101
+  namespace: wordpress
 spec:
   type: NodePort
   ports:
@@ -22,6 +23,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
    name: wp-app-pv-101
+   namespace: wordpress
 spec:
   storageClassName: manual
   accessModes:
@@ -39,6 +41,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: wp-app-claim-101
+  namespace: wordpress
 spec:
   storageClassName: manual
   volumeName: wp-app-pv-101
@@ -54,6 +57,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress-101
+  namespace: wordpress
   labels:
     app: wordpress-101
 spec:
