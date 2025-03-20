@@ -1,6 +1,6 @@
 kind: Secret
 apiVersion: v1
 metadata:
-  name: mysql-pass
+  name: mysql-pass-101
 stringData:
   password: "pilgrim12345"
