@@ -2,5 +2,6 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: mysql-pass-101
+  namespace: workpress
 stringData:
   password: "pilgrim12345"
